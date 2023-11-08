@@ -3,6 +3,8 @@
 import { Rating } from "@mui/material";
 import React, { useCallback, useState } from "react";    
 import SetColor from "@/app/components/products/SetColor";
+import SetQuantity from "@/app/components/products/SetQuantity";
+
 
 
 interface ProductDetailsProps {
@@ -46,7 +48,7 @@ const ProductDetails: React.FC<ProductDetailsProps> =
         price: product.price,
     });
 
-    console.log(cartProduct);
+   
 
 
     const productRating = 
@@ -62,6 +64,29 @@ const ProductDetails: React.FC<ProductDetailsProps> =
         }, 
         [cartProduct.selectedImg]
         );
+
+    const handleQtyIncrease = useCallback(() => {
+        if (cartProduct.quantity === 99) {
+            return;
+        }
+
+        setCartProduct((prev) => {
+            return { ...prev, quantity: prev.quantity  +1};
+        });
+    }, [cartProduct]);
+
+
+    const handleQtyDecrease = useCallback(() => {
+        if (cartProduct.quantity === 0) {
+            return;
+        }
+
+
+        setCartProduct((prev) => {
+            return { ...prev, quantity: prev.quantity  - 1};
+        });
+    }, [cartProduct]);
+
 
 
     return (
@@ -97,7 +122,11 @@ const ProductDetails: React.FC<ProductDetailsProps> =
          handleColorSelect={handleColorSelect}
         />
         <Horizontal />
-        <div>quality</div>
+        < SetQuantity  
+        cartProduct={cartProduct}
+        handleQtyDecrease={handleQtyDecrease}
+        handleQtyIncrease={handleQtyIncrease}
+        />
         <Horizontal />
         <div>size</div>
         <Horizontal />
