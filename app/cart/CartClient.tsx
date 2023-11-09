@@ -9,7 +9,7 @@ import ItemContent from "./ItemContent";
 
  
 const CartClient = () => {
-    const {cartProducts} = useCart();
+    const {cartProducts, handleClearCart} = useCart();
     
     
         if(!cartProducts || cartProducts.length === 0) {
@@ -60,8 +60,12 @@ const CartClient = () => {
              justify-between
              gap-4">
                 <div className="w-[90px]">
-                    <Button label="clear cart" onClick={() =>
-                    {}} small outline />
+                    <Button 
+                    label="clear cart"
+                     onClick={() =>
+                    {handleClearCart()}}
+                     small 
+                     outline />
         </div>
         <div className="text-sm flex flex-col gap-1
         items-start">
