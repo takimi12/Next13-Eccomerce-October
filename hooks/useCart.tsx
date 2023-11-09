@@ -14,6 +14,7 @@ import {
 
 type CartContextType = {
     cartTotalQty: number;
+    cartTotalAmount: number;    
     cartProducts: CartProductType[] | null;
     handleAddProductToCart: (product: CartProductType) => void;
     handleRemoveProductFromCart: (product: CartProductType) => void;
@@ -181,6 +182,7 @@ export const CartContextProvider = (props: Props) => {
     
     const value = {
         cartTotalQty,
+        cartTotalAmount,
         cartProducts,
         handleAddProductToCart,
         handleRemoveProductFromCart,
