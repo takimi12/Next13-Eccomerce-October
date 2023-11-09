@@ -15,7 +15,9 @@ type CartContextType = {
     cartTotalQty: number;
     cartProducts: CartProductType[] | null;
     handleAddProductToCart: (product: CartProductType) => void;
-    handleRemoveProductFromCart: (product: CartContextType) => void;
+    handleRemoveProductFromCart: (product: CartProductType) => void;
+    handleCartQtyIncrease: (product: CartProductType) => void;
+    handleCartQtyDecrease: (product: CartProductType) => void;
 
 }
 
@@ -59,7 +61,7 @@ export const CartContextProvider = (props: Props) => {
     ], []);
 
     const handleRemoveProductFromCart = useCallback((
-        product: CarProductType
+        product: CartProductType
     ) => {
         if(cartProducts) {
             const filteredProducts = cartProducts.filter(
@@ -76,8 +78,60 @@ export const CartContextProvider = (props: Props) => {
         }
     }, [cartProducts]);
 
+    const handleCartQtyIncrease = useCallback(
+        (product:CartProductType) => {
+            let updatedCart;
+        if(product.quantity === 99){
+        return toast.error("You can't add more than 99 items");
+    }
 
+    if(cartProducts) {
+        updatedCart = [...cartProducts]
 
+        const existingIndex = cartProducts.findIndex(
+            (item) => item.id === product.id
+        );
+
+            if(existingIndex > -1) {
+                updatedCart[existingIndex].quantity =
+                updatedCart[existingIndex].quantity + 1;
+            }
+            
+            setCartProducts(updatedCart)
+            localStorage.setItem('EshopCartitems', 
+            JSON.stringify(updatedCart));
+    }       
+},
+    [cartProducts]
+    );
+
+    
+    const handleCartQtyDecrease = useCallback(
+        (product:CartProductType) => {
+            let updatedCart;
+        if(product.quantity === 1){
+        return toast.error("You can't add more than 99 items");
+    }
+
+    if(cartProducts) {
+        updatedCart = [...cartProducts]
+
+        const existingIndex = cartProducts.findIndex(
+            (item) => item.id === product.id
+        );
+
+            if(existingIndex > -1) {
+                updatedCart[existingIndex].quantity =
+                updatedCart[existingIndex].quantity - 1;
+            }
+            
+            setCartProducts(updatedCart)
+            localStorage.setItem('EshopCartitems', 
+            JSON.stringify(updatedCart));
+    }       
+},
+    [cartProducts]
+    );
 
 
 
@@ -87,6 +141,8 @@ export const CartContextProvider = (props: Props) => {
         cartProducts,
         handleAddProductToCart,
         handleRemoveProductFromCart,
+        handleCartQtyIncrease,
+        handleCartQtyDecrease,
     };
 
     return (
