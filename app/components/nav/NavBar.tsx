@@ -2,6 +2,7 @@ import Link from "next/link";
 import Container from "../container";
 import { Redressed } from "next/font/google";
 import CartCount from "./CartCount";
+import UserMenu from "./UserMenu";
 
 
 const redressed = Redressed ({ subsets: ['latin'],
@@ -31,7 +32,7 @@ const Navbar = () => {
             md:gap-12
             ">
                <CartCount />
-                <div>UserMenu</div>
+                    <UserMenu />
             </div>
         </div>
     </Container>

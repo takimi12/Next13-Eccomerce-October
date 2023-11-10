@@ -6,6 +6,10 @@ import Input from "../components/inputs/Input";
 import {FieldValues, SubmitHandler, useForm} from "react-hook-form";
 import Button from "../components/Button";
 import Link from "next/link";
+import axios from "axios";
+import {signIn} from "next-auth/react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 
 const RegisterForm = () => {
@@ -23,9 +27,40 @@ const RegisterForm = () => {
     },
   });
 
+  const router = useRouter();
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
+
+    axios
+      .post("/api/register", data)
+      .then(() => {
+        toast.success("Account created");
+
+        signIn("credentials", {
+          email: data.email,
+          password: data.password,
+          redirect: false,
+        }).then((callback) => {
+          setIsLoading(false);
+
+          if (callback?.ok) {
+            router.push("/cart");
+            router.refresh();
+            toast.success("Logged in");
+          }
+
+          if (callback?.error) {
+            toast.error(callback.error);
+          }
+        });
+      })
+      .catch(() => toast.error("Something went wrong"))
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
+
 
   return (
     <>
