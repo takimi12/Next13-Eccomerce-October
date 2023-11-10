@@ -39,8 +39,7 @@ export const CartContextProvider = (props: Props) => {
     const [cartProducts, setCartProducts] = useState<CartProductType[] | null>(null);
 
 
-        console.log('qty', cartTotalQty);
-        console.log('amount', cartTotalQty);
+
 
     useEffect(() => {
     const cartItems: any = localStorage.getItem('EshopCartitems');
@@ -49,9 +48,6 @@ export const CartContextProvider = (props: Props) => {
     
         setCartProducts(cProducts);
     }, []);
-
-    console.log("qty", cartTotalQty);
-    console.log("amount", cartTotalAmount);
 
     useEffect(() => {
         const getTotals = () => {

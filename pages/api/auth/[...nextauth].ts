@@ -1,11 +1,11 @@
-import prisma from "@/libs/prismadb";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import NextAuth, { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import prisma from "@/libs/prismadb";
 import bcrypt from "bcrypt";
 
-export const authOptions: AuthOptions = {
+export const authOptions: AuthOptions =  {
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
@@ -25,7 +25,7 @@ export const authOptions: AuthOptions = {
         },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
+        if (!credentials?.email || !credentials.password) {
           throw new Error("Invalid email or password");
         }
 

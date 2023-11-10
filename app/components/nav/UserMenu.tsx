@@ -5,11 +5,16 @@ import { useCallback, useState } from "react";
 import { AiFillCaretDown } from "react-icons/ai";
 import MenuItem from "./MenuItem";
 import Avatar from "../Avatar";
-import BackDrop from "./Backdrop";
+import BackDrop from "./BackDrop";
 import { signOut } from "next-auth/react";
+import { User } from  "@prisma/client"
+import { SafeUser } from "@/types";
 
+interface UserMenuProps {
+  currentUser: SafeUser | null;
+}
 
-const UserMenu = () => {
+const UserMenu: React.FC<UserMenuProps> = ({currentUser}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = useCallback(() => {
@@ -36,7 +41,7 @@ const UserMenu = () => {
         text-slate-700
         "
         >
-          <Avatar />
+          <Avatar src={currentUser?.image} />
           <AiFillCaretDown />
         </div>
 
@@ -57,16 +62,42 @@ const UserMenu = () => {
         cursor-pointer
         "
           >
-            <div>
+            {currentUser ?  <div>
           <Link href="/orders">
             <MenuItem onClick={toggleOpen} >
                 Your Orders
                 </MenuItem>
             </Link>
-            </div>
+          <Link href="/admin">
+            <MenuItem onClick={toggleOpen}>
+                Admin Dashboard
+                </MenuItem>
+            </Link>
+            <hr />
+            <MenuItem onClick={() => {
+                signOut();
+                toggleOpen();
+            }}>
+                Logout
+            </MenuItem>
+            </div> :    <div>
+            <Link href="/login">
+            <MenuItem onClick={toggleOpen} >
+                Login
+                </MenuItem>
+            </Link>
+            <Link href="/register">
+            <MenuItem onClick={toggleOpen} >
+                Register
+                </MenuItem>
+            </Link>            
+            </div>}
+           
+         
             </div>
         )}
       </div>
+        {isOpen ? <BackDrop onClick={toggleOpen} /> : null}
     </>
   );
 };
