@@ -1,6 +1,6 @@
 import Stripe from "stripe";
-import  prisma  from "@/libs/prismadb";
 import { NextResponse } from "next/server";
+import  prisma  from "@/libs/prismadb";
 import getCurrentUser from "@/actions/getCurrentUser";
 import { CartProductType } from "@/app/product/[productId]/ProductDetails";
 
@@ -8,13 +8,19 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2023-10-16",
 });
 
+
+
 const calculateOrderAmount = (items: CartProductType[]) => {
   const totalPrice = items.reduce((acc, item) => {
     const itemTotal = item.price * item.quantity;
     return acc + itemTotal;
   }, 0);
-  return totalPrice;
+
+const price:any  = Math.floor(totalPrice);
+
+return price;
 };
+
 
 export async function POST(request: Request) {
   const currentUser = await getCurrentUser();
@@ -30,10 +36,10 @@ export async function POST(request: Request) {
   const orderData = {
     user: { connect: { id: currentUser?.id } },
     amount: total,
-    currency: "usd",
+    currency: "pln",
     status: "pending",
     deliveryStatus: "pending",
-    paymentIntentId: payment_intent_id,
+    paymentIntentID: payment_intent_id,
     products: items,
   };
 
@@ -50,11 +56,11 @@ export async function POST(request: Request) {
 
         const [existing_order, updated_order] = await Promise.all([
             prisma.order.findFirst({
-              where: { paymentIntentId: payment_intent_id },
+              where: { paymentIntentID: payment_intent_id },
               // include: { products: true },
             }),
             prisma.order.update({
-              where: { paymentIntentId: payment_intent_id },
+              where: { paymentIntentID: payment_intent_id },
               data: {
                 amount: total,
                 products: items,
@@ -79,7 +85,7 @@ export async function POST(request: Request) {
         });
 
         // create the order
-        orderData.paymentIntentId = paymentIntent.id;
+        orderData.paymentIntentID = paymentIntent.id;
 
         await prisma.order.create({
             data: orderData,

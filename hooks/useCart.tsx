@@ -7,6 +7,7 @@ import {
      useCallback, 
       useEffect 
     } from "react";
+import { set } from "react-hook-form";
     import {toast } from "react-hot-toast";
 
 
@@ -21,6 +22,8 @@ type CartContextType = {
     handleCartQtyIncrease: (product: CartProductType) => void;
     handleCartQtyDecrease: (product: CartProductType) => void;
     handleClearCart: () => void;
+    paymentIntent: string | null;
+    handleSetPaymentIntent: (val: string | null) => void;
 }
 
 
@@ -39,14 +42,17 @@ export const CartContextProvider = (props: Props) => {
     const [cartProducts, setCartProducts] = useState<CartProductType[] | null>(null);
 
 
+    const [paymentIntent, setPaymentIntent] = useState<string | null>(null);
 
 
     useEffect(() => {
     const cartItems: any = localStorage.getItem('EshopCartitems');
-    const cProducts: CartProductType[] | null =  JSON.
-    parse(cartItems) 
-    
+    const cProducts: CartProductType[] | null =  JSON.parse(cartItems) 
+    const eShopPaymentIntent: any = localStorage.getItem('EshopPaymentIntent');
+    const paymentIntent: string | null = JSON.parse(eShopPaymentIntent);
+
         setCartProducts(cProducts);
+        setPaymentIntent(paymentIntent);
     }, []);
 
     useEffect(() => {
@@ -175,7 +181,14 @@ export const CartContextProvider = (props: Props) => {
         stringify(null));
     }, [cartProducts]);
 
-    
+    const handleSetPaymentIntent = useCallback(
+        (val: string | null) => {
+          setPaymentIntent(val);
+          localStorage.setItem("eShopPaymentIntent", JSON.stringify(val));
+        },
+        [paymentIntent]
+      );
+
     const value = {
         cartTotalQty,
         cartTotalAmount,
@@ -185,6 +198,9 @@ export const CartContextProvider = (props: Props) => {
         handleCartQtyIncrease,
         handleCartQtyDecrease,
         handleClearCart,
+        paymentIntent,
+        handleSetPaymentIntent,
+
     };
 
     return (

@@ -4,7 +4,7 @@ import { Rating } from "@mui/material";
 import React, { useCallback, useState, useEffect } from "react";    
 import SetColor from "@/app/components/products/SetColor";
 import SetQuantity from "@/app/components/products/SetQuantity";
-import Button from "@/app/components/products/Button";
+import Button from "@/app/components/Button";
 import ProductImage from "@/app/components/products/ProductImage";
 import { useCart } from "@/hooks/useCart";
 import { MdCheck, MdCheckCircle } from "react-icons/md";
@@ -24,7 +24,7 @@ export type CartProductType={
     brand: string,
     selectedImg: SelectedImgType,
     quantity: number,
-    price: number
+    price: number,
 }
 
 export type SelectedImgType = {

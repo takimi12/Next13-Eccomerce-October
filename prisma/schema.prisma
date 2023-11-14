@@ -35,7 +35,7 @@ model User {
     hashedPassword String?
     createdAt      DateTime  @default(now())
     updateAt       DateTime  @updatedAt
-    role           RoLe      @default(USER)
+    role           Role      @default(USER)
     accounts       Account[]
     orders         Order[]
 }
@@ -81,7 +81,7 @@ type Address {
     state       String
 }
 
-enum RoLe {
+enum Role {
     USER
     ADMIN
 }
