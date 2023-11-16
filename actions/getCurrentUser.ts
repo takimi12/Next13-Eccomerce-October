@@ -18,8 +18,9 @@ export default async function getCurrentUser() {
         findUnique({
             where: {
                 email: session?.user?.email
-            }
-        })
+            },
+            include:{orders: true},
+        });
     
         if(!currentUser){
             return null
