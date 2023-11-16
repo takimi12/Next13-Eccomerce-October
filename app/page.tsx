@@ -1,9 +1,22 @@
 import { products } from "@/utils/products";
 import HomeBanner from "./components/HomeBanner";
-import Container from "./components/container";
+import Container from "./components/Container";
 import ProductCard from "./components/products/ProductCard";
+import getProducts, { IProductParams } from "@/actions/getProducts";
+import NullData from "./components/NullData";
 
-export default function Home() {
+
+interface HomeProps {
+searchParams: IProductParams;
+}
+
+export default async function Home({searchParams}: HomeProps) {
+ const products = await getProducts(searchParams);
+
+ if(products.length === 0) {
+    return <NullData title="No products found. Click All to clear filters" />;
+  }
+
   return (
     <div className="pb-8">
       <Container>
