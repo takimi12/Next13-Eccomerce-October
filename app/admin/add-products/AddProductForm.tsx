@@ -20,7 +20,7 @@ import {
 } from "firebase/storage";
 import firebaseApp from "@/libs/firebase";
 import Heading from "@/app/components/Heading";
-import CustomCheckBox from "@/app/components/inputs/CustomCheckBox";
+import CustomCheckBox from "@/app/components/inputs/CustomCheckbox";
 
 export type ImageType = {
   color: string;

@@ -1,3 +1,5 @@
+export const revalidate = 0;
+
 import { products } from "@/utils/products";
 import HomeBanner from "./components/HomeBanner";
 import Container from "./components/Container";
@@ -39,8 +41,7 @@ export default async function Home({searchParams}: HomeProps) {
             return (
               <ProductCard
                 key={product.id}
-                data={product}
-                shuffledProducts={shuffledProducts}
+                data={product.id}
               />
             );
           })}
