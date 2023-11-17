@@ -2,10 +2,10 @@
 
 import { truncateText } from "@/utils/truncateText";
 import Image from "next/image";
-import { CartProductType } from "@prisma/client";
+import { CartProduct } from "@prisma/client";
 
 interface OrderItemProps {
-  item: CartProductType;
+  item: CartProduct;
 }
 
 const OrderItem: React.FC<OrderItemProps> = ({ item }) => {
