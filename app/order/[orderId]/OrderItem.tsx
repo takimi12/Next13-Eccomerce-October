@@ -2,10 +2,10 @@
 
 import { truncateText } from "@/utils/truncateText";
 import Image from "next/image";
-import { CartProduct } from "@prisma/client";
+import { CartProductType } from "@prisma/client";
 
 interface OrderItemProps {
-  item: CartProduct;
+  item: CartProductType;
 }
 
 const OrderItem: React.FC<OrderItemProps> = ({ item }) => {
@@ -31,7 +31,7 @@ const OrderItem: React.FC<OrderItemProps> = ({ item }) => {
             "
         >
           <Image
-            src={item.selectedImage.image}
+            src={item.selectedImg.image}
             alt={item.name}
             fill
             className="object-contain"
@@ -39,7 +39,7 @@ const OrderItem: React.FC<OrderItemProps> = ({ item }) => {
         </div>
         <div className="flex flex-col gap-1">
           <div>{truncateText(item.name)}</div>
-          <div>{item.selectedImage.color}</div>
+          <div>{item.selectedImg.color}</div>
         </div>
       </div>
       <div className="justify-self-center">${item.price.toFixed(2)}</div>
