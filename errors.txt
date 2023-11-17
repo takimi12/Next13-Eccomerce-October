@@ -1,0 +1,9 @@
+Problem może występować na stronach takich jak 
+Navbar,
+AddProducts, 
+Cart,
+Login 
+ Register. 
+ 
+ Błędy te wynikają z próby renderowania tych stron statycznie, 
+ale z jakiegoś powodu używają dynamicznego serwera, co jest niedozwolone przy próbie generacji statycznej.

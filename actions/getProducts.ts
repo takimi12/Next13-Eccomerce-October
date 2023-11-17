@@ -50,9 +50,7 @@ export default async function getProducts(params: IProductParams) {
           },
         },
       },
-      // orderBy: {
-      //   createdDate: "desc",
-      // },
+
     });
 
     return products;

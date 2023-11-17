@@ -1,4 +1,4 @@
-import Container from "../../components/Container";
+import Container from "@/app/components/Container";
 import FormWrap from "@/app/components/FormWrapper";
 import AddProductForm from "./AddProductForm";
 import getCurrentUser from "@/actions/getCurrentUser";
