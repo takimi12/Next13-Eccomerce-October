@@ -1,24 +1,9 @@
-import Container from "@/app/components/Container";
-import ManageOrdersClient from "./ManageOrdersClient";
-import getOrders from "@/actions/getOrders";
-import getCurrentUser from "@/actions/getCurrentUser";
-import NullData from "@/app/components/NullData";
-
-const ManageOrders = async () => {
-  const orders = await getOrders();
-  const currentUser = await getCurrentUser();
-
-  if (!currentUser || currentUser.role !== "ADMIN") {
-    return <NullData title="Oops! Access denied." />;
-  }
-
-  return (
-    <div className="pt-8">
-      <Container>
-        <ManageOrdersClient orders={orders} />
-      </Container>
-    </div>
-  );
-};
-
+const ManageOrders = () => {
+    return ( 
+        <div>
+            <h1>Manage Orders</h1>
+        </div>
+     );
+}
+ 
 export default ManageOrders;
