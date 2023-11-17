@@ -20,7 +20,7 @@ export default async function getProducts(params: IProductParams) {
       query.category = category;
     }
 
- 
+
 
     const products = await prisma.product.findMany({
       where: {
@@ -60,4 +60,3 @@ export default async function getProducts(params: IProductParams) {
     throw new Error(error);
   }
 }
- 

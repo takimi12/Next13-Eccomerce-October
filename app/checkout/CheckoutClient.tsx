@@ -86,7 +86,7 @@ return (
     <div className="max-w-[220px] w-full">
     <Button 
     label="View Your Orders"
-    onClick={() => router.push('/orders')}
+    onClick={() => router.push('/order')}
     /></div>
     </div>
     )}
