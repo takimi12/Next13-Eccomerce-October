@@ -25,10 +25,12 @@ return price;
 export async function POST(request: Request) {
   const currentUser = await getCurrentUser();
 
-  if (!currentUser) {
-    return NextResponse.json({ error: " Unauthorized" }, { status: 401 });
-  }
+  if (!currentUser)  return NextResponse.error();
 
+  if (currentUser.role !== "ADMIN") {
+    return NextResponse.error();
+    }
+  
   const body = await request.json();
   const { items, payment_intent_id } = body;
   const total = calculateOrderAmount(items) * 100;
